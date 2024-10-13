@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="styles.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="logo.png">
+</head>
+<body>
+    <div class="wrapper">
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-link"></i> URL Pro</h3>
+            </div>
+            <ul class="list-unstyled components">
+                <li class="active"><a href="#" id="dashboardLink"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="#" id="profileLink"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="#" id="analyticsLink"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+                <li><a href="#" id="settingsLink"><i class="fas fa-cog"></i> Settings</a></li>
+                <li id="adminLink" style="display: none;"><a href="#" id="adminDashboardLink"><i class="fas fa-user-shield"></i> Admin Dashboard</a></li>
+                <li><a href="#" id="logoutButton"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </nav>
+        <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <h1 class="navbar-brand mb-0">URL Shortener Pro</h1>
+                    <div id="userInfo" class="ms-auto">
+                        <img src="https://via.placeholder.com/40" alt="User Avatar" class="rounded-circle">
+                        <span id="userGreeting">Welcome, User!</span>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container-fluid mt-4">
+                <div id="auth" class="section fade-in">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <ul class="nav nav-tabs" id="authTabs" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab" aria-controls="login" aria-selected="true">Login</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register" type="button" role="tab" aria-controls="register" aria-selected="false">Register</button>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content mt-3" id="authTabsContent">
+                                        <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+                                            <form id="loginForm">
+                                                <div class="mb-3">
+                                                    <label for="loginEmail" class="form-label">Email</label>
+                                                    <input type="email" class="form-control" id="loginEmail" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="loginPassword" class="form-label">Password</label>
+                                                    <input type="password" class="form-control" id="loginPassword" required>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary w-100">Login</button>
+                                            </form>
+                                        </div>
+                                        <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+                                            <form id="registerForm">
+                                                <div class="mb-3">
+                                                    <label for="registerUsername" class="form-label">Username</label>
+                                                    <input type="text" class="form-control" id="registerUsername" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="registerEmail" class="form-label">Email</label>
+                                                    <input type="email" class="form-control" id="registerEmail" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="registerPassword" class="form-label">Password</label>
+                                                    <input type="password" class="form-control" id="registerPassword" required>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary w-100">Register</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="dashboard" class="section fade-in">
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h2 class="card-title">Shorten URL</h2>
+                                    <form id="urlForm">
+                                        <div class="mb-3">
+                                            <label for="urlInput" class="form-label">URL to shorten</label>
+                                            <input type="url" class="form-control" id="urlInput" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="customSlugInput" class="form-label">Custom slug (optional)</label>
+                                            <input type="text" class="form-control" id="customSlugInput">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="expirationDateInput" class="form-label">Expiration date (optional)</label>
+                                            <input type="date" class="form-control" id="expirationDateInput">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Shorten URL</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h2 class="card-title">Quick Stats</h2>
+                                    <div class="row">
+                                        <div class="col-6 mb-3">
+                                            <h5>Total URLs</h5>
+                                            <h3 id="totalUrls">0</h3>
+                                        </div>
+                                        <div class="col-6 mb-3">
+                                            <h5>Total Clicks</h5>
+                                            <h3 id="totalClicks">0</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title">Your URLs</h2>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Original URL</th>
+                                            <th>Short URL</th>
+                                            <th>Clicks</th>
+                                            <th>Created At</th>
+                                            <th>Expires At</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="urlTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="profile" class="section fade-in">
+                    <h2>User Profile</h2>
+                    <form id="profileForm">
+                        <div class="mb-3">
+                            <label for="profileUsername" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="profileUsername" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="profileEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="profileEmail" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                    </form>
+                </div>
+
+                <div id="analytics" class="section fade-in">
+                    <h2>Analytics Summary</h2>
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Total URLs</h5>
+                                    <h2 id="totalUrls" class="display-4">0</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Total Clicks</h5>
+                                    <h2 id="totalClicks" class="display-4">0</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Top 5 Performing URLs</h5>
+                            <ul id="topUrlsList" class="list-group"></ul>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Click Analytics</h5>
+                            <canvas id="analyticsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="settings" class="section fade-in">
+                    <h2>Settings</h2>
+                    <form id="settingsForm">
+                        <div class="mb-3">
+                            <label for="defaultExpirationDays" class="form-label">Default URL Expiration (days)</label>
+                            <input type="number" class="form-control" id="defaultExpirationDays" min="1" max="365">
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="enableNotifications">
+                            <label class="form-check-label" for="enableNotifications">Enable Email Notifications</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Settings</button>
+                    </form>
+                </div>
+
+                <div id="admin" class="section fade-in">
+                    <h2>Admin Dashboard</h2>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">All Users</h5>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Created At</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="userTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="error" class="alert alert-danger fade-in"></div>
+
+    <!-- Modals -->
+    <div class="modal fade" id="editUrlModal" tabindex="-1" aria-labelledby="editUrlModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUrlModalLabel">Edit URL</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editUrlForm">
+                        <div class="mb-3">
+                            <label for="editUrlInput" class="form-label">Original URL</label>
+                            <input type="url" class="form-control" id="editUrlInput" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editCustomSlugInput" class="form-label">Custom Slug</label>
+                            <input type="text" class="form-control" id="editCustomSlugInput">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editExpirationDateInput" class="form-label">Expiration Date</label>
+                            <input type="date" class="form-control" id="editExpirationDateInput">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="qrCodeModal" tabindex="-1" aria-labelledby="qrCodeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="qrCodeModalLabel">QR Code</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center" id="qrCodeModalBody"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="result" style="display: none;"></div>
+
+    <div id="messageContainer" class="alert" style="display: none; position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
